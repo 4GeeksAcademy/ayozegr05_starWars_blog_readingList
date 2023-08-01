@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
 
+
+
 // Don't change, here is where we initialize our context, by default it's just going to be null.
 export const Context = React.createContext(null);
 
@@ -31,6 +33,13 @@ const injectContext = PassedComponent => {
 			 * state.actions.loadSomeData(); <---- calling this function from the flux.js actions
 			 *
 			 **/
+			state.actions.getPeople();
+			state.actions.addFavorite();
+			state.actions.removeFavorite();
+			state.actions.getSpecies();
+			state.actions.getPlanets();
+			state.actions.getVehicles();
+			// state.actions.searchBar();
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

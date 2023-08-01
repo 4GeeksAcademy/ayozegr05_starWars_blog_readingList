@@ -1,3 +1,64 @@
-/* 
-    General Styles
-*/
+.black{
+    background: black;
+}
+body{
+    background-image: url('https://getwallpapers.com/wallpaper/full/4/c/c/29997.jpg');
+}
+.letra{
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+.bordes{
+    border:2px solid rgba(255, 177, 9, 0.932);
+    border-radius: 0.7rem;
+}
+.bordesimg{
+    border-radius: 0.7rem 0 0 0.7rem;
+}
+.bordesimggrid{
+    border-radius: 0.2rem 0.2rem 0 0;
+}
+.bordesSmallimg{
+    border-radius: 0.7rem 0 0 0;
+}
+.image-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .image-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image-wrapper img {
+    width: 550px;
+    height: 350px;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+    
+  }
+  
+  .image-text-overlay {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 5px;
+    width:100%;
+  }
+  
+  /* Estilo adicional para que el texto sea visible todo el tiempo */
+  .image-text-overlay {
+    opacity: 0.8;
+  }
+  
+  /* Escala ligeramente la imagen al pasar el mouse sobre ella */
+  .image-wrapper:hover img {
+    transform: scale(1.1);
+  }
+  
