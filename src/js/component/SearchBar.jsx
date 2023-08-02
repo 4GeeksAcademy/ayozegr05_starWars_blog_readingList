@@ -1,51 +1,38 @@
-import React, { useState, useContext } from "react";
+import React from "react";
+import { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { store, actions } = useContext(Context);
-  
-  
+  const { actions } = useContext(Context);
+  const navigate = useNavigate(); // Usa el hook useNavigate para acceder a la función de navegación
 
   const handleSearch = async (event) => {
-    event.preventDefault();// Evita el reinicio del formulario al presionar Enter
-    setSearchTerm(""); 
-    // // Asegurarse de que searchTerm tenga un valor válido (cadena vacía si es undefined o null)
+    event.preventDefault();
+
+    const term = searchTerm // Elimina los espacios en blanco al inicio y al final del término de búsqueda
+
+    if (term === "") {
+      // Si la barra de búsqueda está vacía, no hagas nada
+      return;
+    }
+    // Asegura que searchTerm tenga un valor válido (cadena vacía si es undefined o null)
     // const term = searchTerm || "";
-  
-    // // Primero, asegurémonos de tener la lista completa de personas
-    // await actions.getPeople();
-  
-    // // Luego, realicemos la búsqueda y obtenemos el resultado filtrado
-    // const filteredPeople = actions.searchBar(term);
-  
-    // // Actualiza el estado 'people' con los resultados filtrados
-    // actions.setPeople(filteredPeople); --------> definir
+
+    // Llama a la acción 'searchBar' del contexto para filtrar los resultados almacenados en el localStorage
+    actions.searchBar(term);
+
+    // Limpia el campo de búsqueda
+    setSearchTerm("");
+
+    // Redirige al usuario a la ruta /results utilizando la función de navegación
+    navigate("/results");
   };
 
-  const fetchData = (value) => {
-    fetch("https://www.swapi.tech/api/people")
-      .then((response) => response.json())
-      .then((json) => {
-        const result = json.results.filter((person) => {
-            return (
-              value &&
-              person &&
-              person.name &&
-              person.name.toLowerCase().includes(value.toLowerCase())
-            );
-          })
-          .map((person) => person.name); // Extraer solo la propiedad 'name' (nombre)
-        
-        console.log("Resultados filtrados: ", result); // Ahora 'result' solo contendrá los nombres
-        // setResults(result); // Actualizar 'setResults' con los nombres
-      });
+  const handleChange = (value) => {
+    setSearchTerm(value);
   };
-
-  const handleChange = (value)  => {
-    setSearchTerm(value)
-    fetchData(value)
-  }
 
   return (
     <div className="containerInput">
@@ -59,11 +46,11 @@ export const SearchBar = () => {
             value={searchTerm}
             onChange={(e) => handleChange(e.target.value)}
           />
-          <Link className="btn btn-outline-success" type="submit">
+          <button type="submit" className="btn btn-outline-success">
             <div className="d-flex align-items-center">
-              <i className="fa fa-search me-2" style={{ color: "#f8d00d" }}></i>Search 
+              <i className="fa fa-search me-2" style={{ color: "#f8d00d" }}></i>Search
             </div>
-          </Link>
+          </button>
         </div>
       </form>
     </div>

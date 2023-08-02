@@ -48,7 +48,7 @@ export const Navbar = () => {
 			</div>
 		  </div>
 		</div>
-			{/* <SearchBar /> */}
+			<SearchBar />
 			<BtnFavorites />
 		</nav>
 	  );

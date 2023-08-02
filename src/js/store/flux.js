@@ -4,7 +4,7 @@ const getState =  ({ getStore, getActions, setStore }) => {
 
 	return {
 		store: {
-			//results = []
+			results: [],
 			people: JSON.parse(localStorage.getItem("peopleLocal")) || [],
 			favorites: JSON.parse(localStorage.getItem("favorites")) || [],
 		},
@@ -55,20 +55,27 @@ const getState =  ({ getStore, getActions, setStore }) => {
 					}
 				}
 			},
-			// searchBar: (searchTerm) => {
+			searchBar: (searchTerm) => {
+				console.log("searchTerm:", searchTerm);
+				const storedPeople = JSON.parse(localStorage.getItem("peopleLocal")) || { results: [] };
+				const resultsArray = Array.isArray(storedPeople.results) ? storedPeople.results : [];
 				
-			// 	const storedPeople = JSON.parse(localStorage.getItem("peopleLocal")) || { results: [] };
-			// 	console.log("storedPeople:", storedPeople);
-			// 	const resultsArray = Array.isArray(storedPeople.results) ? storedPeople.results : [];
-			// 	console.log("resultsArray:", resultsArray);
+				// Filtrar solo los objetos que contengan la propiedad 'name'
+				const filteredPeople = resultsArray.filter((person) => {
+				  if (person.name) {
+					const isMatch = person.name.toLowerCase().includes(searchTerm?.toLowerCase());
+					console.log(`Searching for '${searchTerm}', found '${person.name}'. Match? ${isMatch}`);
+					return isMatch;
+				  } else {
+					console.log(`Person with id '${person.uid}' does not have a 'name' property.`);
+					return false;
+				  }
+				});
+				
+				// Actualiza el estado global 'results' con los resultados filtrados
+				setStore({ results: filteredPeople });
+			  },
 			  
-			// 	// Filtrar solo los objetos que contengan la propiedad 'name'
-			// 	const filteredPeople = resultsArray.filter((person) => person.name && person.name.toLowerCase().includes(searchTerm.toLowerCase()));
-			  
-			// 	// Muestra los resultados filtrados en la interfaz sin modificar el estado 'people'
-			// 	console.log("filteredPeople:", filteredPeople);
-			// }, 
-			
 			addFavorite: (nameCharacter) => {
 			const FavoritesList = getStore().favorites; // Obtenemos la lista actual de favoritos
 			const isDuplicate = FavoritesList.some((favorite) => favorite === nameCharacter); // Verificamos si el título ya está en la lista de favoritos

@@ -14,6 +14,7 @@ import { GetSpecies } from "./views/GetSpecies.jsx";
 import { SingleSpecie } from "./views/SingleSpecie.jsx";
 import { GetVehicles } from "./views/GetVehicles.jsx";
 import { SingleVehicle } from "./views/SingleVehicle.jsx";
+import { ViewResults } from "./views/ViewResults.jsx";
 
 //create your first component
 const Layout = () => {
@@ -38,6 +39,7 @@ const Layout = () => {
 						<Route path="/planets/" element={<GetPlanets/>} />
 						<Route path="/species/" element={<GetSpecies/>} />
 						<Route path="/vehicles/" element={<GetVehicles/>} />
+						<Route path="/results" element={<ViewResults />} />
 					</Routes>
 					<Footer />
 				</ScrollToTop>
