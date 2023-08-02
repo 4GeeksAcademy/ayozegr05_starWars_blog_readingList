@@ -58,22 +58,31 @@ const getState =  ({ getStore, getActions, setStore }) => {
 			searchBar: (searchTerm) => {
 				console.log("searchTerm:", searchTerm);
 				const storedPeople = JSON.parse(localStorage.getItem("peopleLocal")) || { results: [] };
-				const resultsArray = Array.isArray(storedPeople.results) ? storedPeople.results : [];
-				
+				const storedPlanets = JSON.parse(localStorage.getItem("planetsLocal")) || { results: [] };
+				const storedSpecies = JSON.parse(localStorage.getItem("speciesLocal")) || { results: [] };
+				const storedVehicles = JSON.parse(localStorage.getItem("vehiclesLocal")) || { results: [] };
+			  
+				const resultsArray = [
+				  ...storedPeople.results,
+				  ...storedPlanets.results,
+				  ...storedSpecies.results,
+				  ...storedVehicles.results,
+				];
+			  
 				// Filtrar solo los objetos que contengan la propiedad 'name'
-				const filteredPeople = resultsArray.filter((person) => {
-				  if (person.name) {
-					const isMatch = person.name.toLowerCase().includes(searchTerm?.toLowerCase());
-					console.log(`Searching for '${searchTerm}', found '${person.name}'. Match? ${isMatch}`);
+				const filteredResults = resultsArray.filter((item) => {
+				  if (item.name) {
+					const isMatch = item.name.toLowerCase().includes(searchTerm?.toLowerCase());
+					console.log(`Searching for '${searchTerm}', found '${item.name}'. Match? ${isMatch}`);
 					return isMatch;
 				  } else {
-					console.log(`Person with id '${person.uid}' does not have a 'name' property.`);
+					console.log(`Item with id '${item.uid}' does not have a 'name' property.`);
 					return false;
 				  }
 				});
-				
+			  
 				// Actualiza el estado global 'results' con los resultados filtrados
-				setStore({ results: filteredPeople });
+				setStore({ results: filteredResults });
 			  },
 			  
 			addFavorite: (nameCharacter) => {
